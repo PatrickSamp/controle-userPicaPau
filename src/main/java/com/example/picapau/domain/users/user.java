@@ -8,6 +8,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -23,6 +26,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class user implements UserDetails{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     private String name;
@@ -33,6 +39,12 @@ public class user implements UserDetails{
     private String password;
 
     private UserRole role;
+
+    public user(String email, String password, UserRole role){
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
